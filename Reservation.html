@@ -1,0 +1,136 @@
+<!DOCTYPE>
+<html lang="fr">
+ <head>
+ <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Réservation d'hôtel-Banfora</title>
+  
+
+  <link rel="stylesheet" href="style.css"></link>
+ </head> 
+   <body>
+     <div class="header">
+          <img src="banfora.jpg" alt="logo de la ville" class="ban">
+          <h1>Réserver un Hôtel</h1>
+     </div>
+     <div class="menu">
+        <a href="index.html">Accueil</a>
+        <a href="Patrimoine.html">Patrimoine</a>
+        <a href="Reservation.html">Réservation d'hôtel</a>
+        <a href="Galerie.html">Galerie</a>
+     </div>
+       <form id="Form">
+        <h1>Réservez votre hôtel à <b>Banfora</b></h1><br>
+    <div class="etape active" id="etape1">
+     <h2>Choisissez votre hôtel</h2>
+   <div class="hotel-options">
+   <div class="hotel-card"><img src="hotel-calypso.jpg" alt="Hôtel Calypso" onclick="choisirHotel('Hotel Calypso',this)">
+    <p class="nom">Hôtel Calypso</p></div>
+   <div class="hotel-card"><img src="nice place2.jpg" alt="Hôtel Nice Place" onclick="choisirHotel('Hotel Nice Place',this)">
+    <p class="nom">Hôtel Nice Place</p></div>
+   <div class="hotel-card"><img src="filename-cascades-hotel.jpg" alt="Hôtel Cascade" onclick="choisirHotel('Hotel Cascade',this)">
+    <p class="nom">Hôtel Cascade</p></div>
+   <div class="hotel-card"><img src="chambre-canne-a-sucre.jpg" alt="Hôtel Canne à sucre" onclick="choisirHotel('Hotel Cascade',this)">
+    <p class="nom">Hôtel Canne à sucre</p></div>
+   <p id="affichage-hotel">Vous avez choisi: <span id="nom-hotel">Aucun</span></p>
+   <input type="hidden" name="hotel" id="hotel" required><br></div>s
+        <h3>Informations personnelles</h3>
+         <label for="nom">Nom:</label><br>
+         <input type="text" name="nom" id="nom" required><br>
+        <label for="nom">Prénom:</label><br>
+         <input type="text" name="prénom" id="prénom" required><br>
+        <label for="nationalite">Nationalite :</label><br>
+        <input type="text" name="nationalité" id="nationalité" required><br>
+         <label for="numero">Numéro de passeport ou de carte d'identité :</label><br>
+        <input type="tel" name="numéro" id="numéro" required><br>
+        <label for="email">Email :</label><br>
+         <input type="email" name="email" id="email" required><br>
+        <label for="telephone">Numéro de telephone :</label><br>
+        <input type="tel" name="téléphone" id="téléphone" required><br>
+    </div>
+    <div class="etape" id="etape3">
+       <h3>Détails pour la réservation:</h3>
+        <label for="sejour">Date de séjour :</label><br>
+        <input type="date" name="séjour" id="séjour" required><br>
+       <label for="nuit">Nombre de nuit :</label><br>
+       <input type="number" name="nuit" id="nuit" required><br>
+        <label for="personne">Nombre de personne :</label><br>
+        <input type="number" name="personne" id="personne" required><br>
+       <label for="chambre">Type de chambre :</label><br>
+       <select name="chambre" id="chambre" required>
+        <option value="simple">Simple-15.000 FCFA</option>
+        <option value="double">Double-25.000 FCFA</option>
+        <option value="suite">Suite-40.000 FCFA</option>
+       </select><br>
+        <label for="nombre">Nombre de chambre :</label><br>
+        <input type="number" name="nombre" id="nombre" required><br>
+    </div>
+    <div class="etape" id="etape4">
+      <h3>Mode de paiement</h3>
+    <label for="carte">Carte bancaire :</label><br>
+    <input type="text" name="carte" id="carte" placeholder="1234 5678 9876 5432" required><br>
+     <label for="expiration">Date d'expiration :</label><br>
+     <input type="month" name="expiration" id="expiration" required><br>
+   <label for="code">Code secret :</label><br>
+   <input type="password" name="code" id="code" required><br>
+   </div>
+   <div class="navigation">
+   <button type="button" id="precedent">Precedent</button>
+   <button type="button" id="suivant">Suivant</button>
+   <button type="submit" id="envoyer">Reserver</button>
+  </div>
+  <div id="confirmation">
+   <label for="méssage">Démande particuliere :</label><br>
+   <textarea id="méssage" name="méssage" rows="4" placeholder="Ex : régime alimentaire,heure d'arrivée etc."></textarea>
+  </div>
+  <div><input type="submit" value="Envoyer la réservation"></div>
+</form>
+ <script>
+   document.addEventListener("DOMContentLoaded", function () {
+         const etapes = document.querySelectorAll(".etape");
+         const btnSuivant = document.getElementById("suivant");
+         const btnPrecedent = document.getElementById("precedent");
+         const btnEnvoyer = document.getElementById("envoyer");
+         const formulaire = document.getElementById("Formulaire-Reservation");
+         const confirmation = document.getElementById("confirmation");
+         let currentStep = 0;
+         selectedHotelCard = 0;
+         afficherEtape(currentStep);
+   function afficherEtape(index) {
+       etapes.forEach((etape, i) => {
+       etape.style.display = i === index ? "block" : "none";
+       });
+       btnPrecedent.style.display = index === 0 ? "none" : "inline-block";
+       btnSuivant.style.display = index === etapes.length - 1 ? "none" : "inline-block";
+       btnEnvoyer.style.display = index === etapes.length - 1 ? "inline-block" :"none" ;
+       }
+       btnSuivant.onclick = () => {
+        if (currentStep < etapes.length - 1) {
+            currentStep++;
+            afficherEtape(currentStep);
+          }
+      };
+      btnPrecedent.onclick = () => {
+        if (currentStep > 0) {
+            currentStep--;
+            afficherEtape(currentStep);
+        }
+      };
+     formulaire.onsubmit = function (e) {
+        e.preventDefault();
+     formulaire.style.display = "none";
+     confirmation.innerHTML = "<h3 style='color: green;'>Réservation envoyée avec succès !</h3>";
+     };
+     window.choisirHotel = function(nom, imgElement) {
+      document.getElementById("hotel").value = nom;
+      
+      document.getElementById("nom-hotel").textContent = nom;
+      document.querySelectorAll(".hotel-card img").forEach(image => {
+       image.classList.remove("selected");
+    });
+       img.classList.add("selected");
+         }
+  });
+   </script>
+ </body>
+</html>
